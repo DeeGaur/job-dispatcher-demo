@@ -1,7 +1,5 @@
 package com.jobdispatcher.adapter.kafka;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -25,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class WorkflowCommandKafkaAdapterImpl implements WorkflowCommandMessagePort{
-	Logger log = LoggerFactory.getLogger(WorkflowCommandKafkaAdapterImpl.class);
 	
 	@Value("${topic}")
 	private String topic;
@@ -42,7 +39,7 @@ public class WorkflowCommandKafkaAdapterImpl implements WorkflowCommandMessagePo
 
 			@Override
 			public void onSuccess(SendResult<String, WorkflowCommandMessage> result) {
-				log.info("[guid:{}] Successfully sent the command to topic:{}", result.getProducerRecord().key(), result.getProducerRecord().topic());
+				log.info("[guid:{}] Successfully sent the command {} to topic:{}", result.getProducerRecord().key(), result.getProducerRecord().value().toString(),result.getProducerRecord().topic());
 			}
 
 			@Override

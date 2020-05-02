@@ -2,8 +2,6 @@ package com.jobdispatcher.adapter.rest.controller;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jobdispatcher.adapter.kafka.WorkflowCommandKafkaAdapterImpl;
 import com.jobdispatcher.adapter.rest.JobDispatcherRequestValidator;
 import com.jobdispatcher.adapter.rest.domain.JobDispatcherRequest;
 import com.jobdispatcher.domain.ErrorConstants;
@@ -20,14 +17,16 @@ import com.jobdispatcher.exception.JobDispatcherException;
 import com.jobdispatcher.exception.JobDispatcherServiceException;
 import com.jobdispatcher.service.JobDispatcherService;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
+@Getter
+@Setter
 public class JobDispatcherController {
 
-	Logger log = LoggerFactory.getLogger(JobDispatcherController.class);
-	
 	private JobDispatcherService jobDispatcherService;
 	private JobDispatcherRequestValidator jobDispatcherRequestValidator;
 	
@@ -57,14 +56,6 @@ public class JobDispatcherController {
 		}
 		
 		log.info("[guid:{}] Completed job dispatch", jobDispatcherRequest.getGuid());
-	}
-
-	public JobDispatcherService getJobDispatcherService() {
-		return jobDispatcherService;
-	}
-
-	public void setJobDispatcherService(JobDispatcherService jobDispatcherService) {
-		this.jobDispatcherService = jobDispatcherService;
 	}
 
 }

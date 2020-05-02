@@ -1,7 +1,5 @@
 package com.jobdispatcher.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.jobdispatcher.domain.CommandStatus;
@@ -11,13 +9,16 @@ import com.jobdispatcher.exception.JobDispatcherAdapterException;
 import com.jobdispatcher.exception.JobDispatcherServiceException;
 import com.jobdispatcher.message.port.WorkflowCommandMessagePort;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@Getter
+@Setter
 public class JobDispatcherServiceImpl implements JobDispatcherService {
 
-	Logger log = LoggerFactory.getLogger(JobDispatcherServiceImpl.class);
 	private WorkflowCommandMessagePort workflowCommandMessagePort;
 
 	public JobDispatcherServiceImpl(WorkflowCommandMessagePort workflowCommandMessagePort) {
@@ -35,13 +36,5 @@ public class JobDispatcherServiceImpl implements JobDispatcherService {
 			log.error("[guid:{}] JobDispatcherServiceException due to {}", message.getGuid(), e.getMessage());
 			throw new JobDispatcherServiceException(ErrorConstants.UNABLE_TO_SEND_CMD_MSG);
 		}
-	}
-
-
-	public WorkflowCommandMessagePort getWorkflowCommandMessagePort() {
-		return workflowCommandMessagePort;
-	}
-	public void setWorkflowCommandMessagePort(WorkflowCommandMessagePort workflowCommandMessagePort) {
-		this.workflowCommandMessagePort = workflowCommandMessagePort;
 	}
 }
